@@ -91,16 +91,17 @@ public class AMQPConsumer extends AMQPSampler implements Interruptible, TestStat
                  */
                 if (getReadResponseAsBoolean()) {
                     result.setSamplerData(new String(delivery.getBody()));
+            	    result.setResponseData(new String(delivery.getBody()), null);
                 }
                 else {
                     result.setSamplerData("Read response is false.");
+            	    result.setResponseData("OK", null);
                 }
 
                 if(!autoAck())
                     channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
             }
 
-            result.setResponseData("OK", null);
             result.setDataType(SampleResult.TEXT);
 
             result.setResponseCodeOK();
